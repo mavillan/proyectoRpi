@@ -3,7 +3,11 @@
 # Creado por proyectoRpi
 # Script que registra las temperatruras del SoC de cada rpi del cluster
 
-for i in $(cat /home/pi/.hosts | grep -v "#"); do
-	echo -e "\n $i: $(ssh $i /opt/vc/bin/vcgencmd measure_temp) \n" >> /home/pi/logs/SoCtemp
-	#ssh $i /opt/vc/bin/vcgencmd measure_temp  >> /home/pi/logs/SoCtemp
+echo "#####################################################"
+
+for i in {0..5..1}; do
+	TEMP=$(ssh rpi0$i /opt/vc/bin/vcgencmd measure_temp)
+	echo -e "rpi0$i: $TEMP" >> /home/pi/logs/SoCtemp
 done
+
+echo -e "\n"
