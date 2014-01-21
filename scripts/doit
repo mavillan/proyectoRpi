@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#Creado por proyectoRpi 20/01/2014
+
+verde='\e[1;32m'
+NC='\e[0m'
+
+help(){
+        echo -e "\n Forma de usar: \n"
+	echo -e "          1) Modo Normal:          doit \"comando\" \n"
+	echo -e "          2) Modo Interactivo:     doit -i \"comando\" \n"
+	echo -e "Ocupe el modo interactivo cuando el comando a ejecutar en el host remoto requiera participación del usuario (Ejemplo: Responder y/n)\n"
+	echo -e "Ambos modos funcionan con y sin comillas. \n"
+}
+
+if [ "$1" == "--help" ]; then
+	help
+	exit
+fi
+
+if [ $# -eq 0  ]; then
+	echo -e "\n Ingrese comando a ejecutar en los hosts remotos.";
+	help
+        exit
+fi
+
+if [ "$1" == "-i" ]; then
+        shift 1
+	for i in $(cat ~/.hosts | grep -v "#"); do
+		printf "$verde%-12s: $NC" $i
+		echo " " 
+		ssh $i "$@"
+		echo " "
+	done
+else
+	parallel-ssh -vi -h ~/.hosts -p 27 -t 0 "$@"
+fi

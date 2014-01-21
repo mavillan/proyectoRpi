@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#Creado por proyectoRpi 20/01/2014
+
+help(){
+        echo -e "\n Forma de usar: \n"
+	echo -e "            cp2all [local_path] [hosts_path] \n"
+	echo -e "            Si el archivo que quiere mandar esta en el directorio actual, solo ingrese el nombre del archivo \n"
+	echo -e "            Si no pone la ruta en los hosts, queda por defecto en /root/ \n"
+	echo -e "            Funciona de igual manera para archivos o directorios, no es necesario agregar -r \n"	
+}
+
+if [ "$1" == "--help" ]; then
+	help
+	exit
+fi
+
+if [ $# -eq 0  ]; then
+	echo -e "\n Ingrese comando a ejecutar en los hosts remotos.";
+	help
+        exit
+fi
+
+if [ $# -eq 1 ]; then
+	parallel-scp -vr -h ~/.hosts -p 27 -t 0 $1 /root/
+else
+	parallel-scp -vr -h ~/.hosts -p 27 -t 0 $1 $2
+fi
