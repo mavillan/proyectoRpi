@@ -12,4 +12,3 @@ for i in {0..5..1}; do
 	echo -e "rpi0$i: $TEMP" >> $LOGPATH
 done
 
-echo -e "\n" >> $LOGPATH
