@@ -6,7 +6,7 @@
 LOGPATH=/home/pi/logs/performance.log
 
 echo -e "#####################################################" >> $LOGPATH
-echo -e "$(date)\n"
+echo -e "$(date)\n" >> $LOGPATH
 
 for i in $(cat /home/pi/.hosts2 | grep -v "#"); do
 	echo $i >> $LOGPATH
