@@ -4,7 +4,6 @@
 # Script que registra las temperatruras del SoC de cada rpi del cluster
 
 for i in $(cat /home/pi/.hosts | grep -v "#"); do
-	echo "$i: " >> /home/pi/logs/SoCtemp
-	ssh $i /opt/vc/bin/vcgencmd measure_temp  >> /home/pi/logs/SoCtemp
-	echo >> "\n" 
+	echo -e "\n $i: $(ssh $i /opt/vc/bin/vcgencmd measure_temp) \n" >> /home/pi/logs/SoCtemp
+	#ssh $i /opt/vc/bin/vcgencmd measure_temp  >> /home/pi/logs/SoCtemp
 done
