@@ -2,33 +2,12 @@
 
 # Creado por proyectoRpi 20/01/2014
 	
-# Script para ejecutar tareas en cluster	
+# Script para ejecutar tareas en cluster con openmpi
 # Verificamos si el comando ha sido ejecutado con algun parametro
-# Si no hay parametros se muestra la ayuda	
-
-# Variable para el nombre del usuario del cluster
-cluster_user="pi"
-
-# Si no hay parametros, mostramos la ayuda
-if [ -z "$1" ];	
-then
-runtask -h
-fi
 	
 # Si hay parametro se valida	
 while test $# -gt 0; do
 	case "$1" in
-
-		# Caso -h, se muestra ayuda
-		-h|--help)
-			echo "Modo de empleo: runtask [opciones] programa."
-			echo " "
-			echo "opciones:"
-			echo "-h, muestra esta ayuda."
-			echo "-p, especifica la cantidad de procesos totales."
-			echo "Ejemplo: runtask -p 5 programa."
-			exit 0
-			;;
 	
 		-v|--version)
 			echo "runtask version 1.0"
@@ -40,15 +19,10 @@ while test $# -gt 0; do
 		# Caso -p (numero de procesos)
 		-p)
 			shift
-			if test $# -gt 0; then
-				echo " "
-				echo "Corriendo tarea..."
-
+			if test $# -gt 0;
+			then
 				# Segundo, se corre el programa
 				mpirun -np $1 -mca btl ^openib -hostfile machinefile $2
-		
-				echo " "
-				echo "Fin ejecucion"					
 			else
 				echo "Especifique cantidad de procesos."
 				exit 1

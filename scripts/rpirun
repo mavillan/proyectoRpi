@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Creado por proyectoRpi 20/01/2014
+	
+# Script para ejecutar tareas en cluster
+# Verificamos si el comando ha sido ejecutado con algun parametro
+# Si no hay parametros se muestra la ayuda	
+
+# Si no hay parametros, mostramos la ayuda
+if [ -z "$1" ];	
+then
+rpirun -h
+fi
+	
+# Si hay parametro se valida	
+while test $# -gt 0; do
+	case "$1" in
+
+		# Caso -h, se muestra ayuda
+		-h|--help)
+			echo "Modo de empleo: rpirun [opciones] programa."
+			echo " "
+			echo "opciones:"
+			echo "-h, muestra esta ayuda."
+			echo "-p, especifica la cantidad de procesos totales."
+			echo "Ejemplo: rpirun -p 5 programa."
+			exit 0
+			;;
+	
+		-v|--version)
+			echo "rpirun version 1.0"
+			echo "Correr programas en el cluster Raspberry Pi"
+			exit 0
+			;;
+
+		# Caso -p (numero de procesos)
+		-p)
+			echo "Copiando" $3 en nodos...
+			cp2all $3 /home/pi/
+			echo ""
+			echo "Ejecutando..."
+			time runtask -p $2 $3
+			echo ""
+			echo "Finalizado"
+			exit 0
+			;;
+
+		# en cualquier cotro caso se muestra el parametro invalido
+		*)
+			echo "Parametro invalido."
+			echo "No se hace nada para $1."
+			break
+			;;
+	esac
+done
