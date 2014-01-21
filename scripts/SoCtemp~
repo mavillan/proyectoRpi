@@ -5,6 +5,6 @@
 
 for i in $(cat /home/pi/.hosts | grep -v "#"); do
 	echo "$i: " >> /home/pi/logs/SoCtemp
-	ssh $i /opt/vc/bin/vcgencmd measure_temp  >> /home/pi/logs/SoCtemp
+	ssh $i /opt/vc/bin/vcgencmd measure_temp  >> /home/pi/logs/SocTemp
 	echo >> "\n" 
 done
