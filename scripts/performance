@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Creado por proyectoRpi 21/01/2014
-# Script que registra las temperatruras del SoC de cada rpi del cluster
+# Script que registra las temperatruras del SoC de cada rpi y frecuencia de procesador en Hz
 
 LOGPATH=/home/pi/logs/performance.log
 
 echo -e "#####################################################" >> $LOGPATH
-echo -e "$(date)\n" >> $LOGPATH
+echo -e "$(date)\n" >> $LOGPAT
 
 for i in $(cat /home/pi/.hosts2 | grep -v "#"); do
 	echo $i >> $LOGPATH
-	ssh $i "/opt/vc/bin/vcgencmd measure_temp && echo "freq=$(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq) Hz"" >> $LOGPATH
+	ssh $i "/opt/vc/bin/vcgencmd measure_temp && sleep 2 && echo "freq=$(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq) Hz"" >> $LOGPATH
 	echo " " >> $LOGPATH 
 done
