@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Script creado por proyectoRpi 21/01/2013
-#Actualiza los archivos modificados en el repositorio
-
-cd /home/pi/proyectoRpi
-git pull
